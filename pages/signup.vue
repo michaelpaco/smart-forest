@@ -11,7 +11,7 @@
         <div class="text-center">
           <nuxt-link
             to="/signin"
-            class="font-medium text-indigo-600 hover:text-indigo-500"
+            class="font-medium text-2xl text-indigo-600 hover:text-indigo-500"
           >
             {{ $t("sign_up.to_signin") }}
           </nuxt-link>
@@ -27,9 +27,9 @@
               type="email"
               autocomplete="email"
               required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md text-md"
               :placeholder="emailPlaceholder"
-            >
+            />
           </div>
           <div>
             <input
@@ -39,16 +39,37 @@
               type="password"
               autocomplete="current-password"
               required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md text-md"
               :placeholder="passwordPlaceholder"
-            >
+            />
+            <input
+              id="confirmPassword"
+              v-model="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md text-md"
+              :placeholder="passwordConfirmationPlaceholder"
+            />
+          </div>
+
+          <div
+            class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md text-md"
+          >
+            <label>
+              <input v-model="checkedPolicy" type="checkbox" />
+              <span class="ml-2"
+                >I agree to the
+                <span class="underline">privacy policy</span></span
+              >
+            </label>
           </div>
         </div>
 
         <div>
           <button
             type="submit"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-2xl font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-800"
             @click.prevent="signUpUser"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -75,32 +96,46 @@
 </template>
 
 <script>
-import appIcon from '@/components/appIcon'
+import appIcon from "@/components/appIcon";
 
 export default {
   components: {
-    appIcon
+    appIcon,
   },
-  data () {
+  data() {
     return {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+      confirmPassword: "",
+      checkedPolicy: false,
+    };
   },
   computed: {
-    emailPlaceholder () {
-      return this.$t('placeholder.email')
+    emailPlaceholder() {
+      return this.$t("placeholder.email");
     },
-    passwordPlaceholder () {
-      return this.$t('placeholder.password')
-    }
+    passwordPlaceholder() {
+      return this.$t("placeholder.password");
+    },
+    passwordConfirmationPlaceholder() {
+      return this.$t("placeholder.confirm_password");
+    },
   },
   methods: {
-    async signUpUser () {
-      await this.$store.dispatch('signUpUser', { email: this.email, password: this.password })
+    async signUpUser() {
+      if (this.password !== this.confirmPassword)
+        return this.$swal.fire("As senhas não são iguais");
 
-      this.$router.push('/')
-    }
-  }
-}
+      if (!this.checkedPolicy)
+        return this.$swal.fire(
+          "Voce precisa ler os termos antes de criar uma conta"
+        );
+
+      await this.$store.dispatch("signUpUser", {
+        email: this.email,
+        password: this.password,
+      });
+    },
+  },
+};
 </script>

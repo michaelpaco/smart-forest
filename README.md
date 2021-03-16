@@ -1,4 +1,8 @@
-# smartforest
+# SmartForest
+
+
+# Properly installing and configuring ESLint and Prettier on VSCode
+- Check this [medium article](https://medium.com/@gogl.alex/how-to-properly-set-up-eslint-with-prettier-for-vue-or-nuxt-in-vscode-e42532099a9c) on how to do it! :)
 
 ## Build Setup
 
@@ -17,4 +21,3 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

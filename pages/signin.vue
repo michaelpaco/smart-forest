@@ -27,9 +27,9 @@
               type="email"
               autocomplete="email"
               required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md sm:text-sm"
+              class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md text-md"
               :placeholder="emailPlaceholder"
-            >
+            />
           </div>
           <div>
             <input
@@ -39,9 +39,9 @@
               type="password"
               autocomplete="current-password"
               required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md sm:text-sm"
+              class="appearance-none rounded-none relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md text-md"
               :placeholder="passwordPlaceholder"
-            >
+            />
           </div>
         </div>
 
@@ -75,35 +75,33 @@
 </template>
 
 <script>
-import appIcon from '@/components/appIcon'
+import appIcon from "@/components/appIcon";
 
 export default {
   components: {
-    appIcon
+    appIcon,
   },
-  data () {
+  data() {
     return {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+    };
   },
   computed: {
-    emailPlaceholder () {
-      return this.$t('placeholder.email')
+    emailPlaceholder() {
+      return this.$t("placeholder.email");
     },
-    passwordPlaceholder () {
-      return this.$t('placeholder.password')
-    }
+    passwordPlaceholder() {
+      return this.$t("placeholder.password");
+    },
   },
   methods: {
-    async signInUser () {
-      await this.$store.dispatch('signInUser', { email: this.email, password: this.password })
-
-      this.$router.push('/')
-    }
-    // test () {
-    //   this.$swal.fire('Hello world!')
-    // }
-  }
-}
+    async signInUser() {
+      await this.$store.dispatch("signInUser", {
+        email: this.email,
+        password: this.password,
+      });
+    },
+  },
+};
 </script>
